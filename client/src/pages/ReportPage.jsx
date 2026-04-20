@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import API_URL from '../config'
 
 export default function ReportPage({ onBack }) {
   const [form, setForm] = useState({
@@ -12,7 +13,7 @@ export default function ReportPage({ onBack }) {
   const handleSubmit = async () => {
     if (!form.nafdacNumber || !form.location) return
     try {
-      await fetch('http://localhost:5000/api/report', {
+      await fetch(`${API_URL}/api/report`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -43,8 +44,6 @@ export default function ReportPage({ onBack }) {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-
-      {/* Header */}
       <header className="px-6 py-5 bg-white border-b border-gray-100 flex items-center gap-3">
         <button onClick={onBack} className="text-gray-400 hover:text-gray-600 mr-1">←</button>
         <div className="w-8 h-8 bg-purple-900 rounded-lg flex items-center justify-center">

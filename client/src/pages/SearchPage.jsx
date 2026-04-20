@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import API_URL from '../config'
 
 export default function SearchPage({ onResult }) {
   const [nafdacNumber, setNafdacNumber] = useState('')
@@ -13,7 +14,7 @@ export default function SearchPage({ onResult }) {
     setError('')
     setLoading(true)
     try {
-      const res = await fetch(`http://localhost:5000/api/verify/${nafdacNumber.trim()}`)
+      const res = await fetch(`${API_URL}/api/verify/${nafdacNumber.trim()}`)
       const data = await res.json()
       onResult(data)
     } catch (err) {
@@ -25,8 +26,6 @@ export default function SearchPage({ onResult }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-purple-800 flex flex-col">
-
-      {/* Header */}
       <header className="px-6 py-5 flex items-center gap-3">
         <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
           <span className="text-purple-900 font-black text-sm">MV</span>
@@ -34,7 +33,6 @@ export default function SearchPage({ onResult }) {
         <span className="text-white font-bold text-lg tracking-tight">MedVerify</span>
       </header>
 
-      {/* Hero */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 text-center pb-10">
         <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 backdrop-blur">
           <span className="text-3xl">💊</span>
@@ -49,7 +47,6 @@ export default function SearchPage({ onResult }) {
           Enter the NAFDAC registration number on your drug packaging to instantly verify its authenticity.
         </p>
 
-        {/* Search Box */}
         <div className="w-full max-w-sm bg-white rounded-2xl p-5 shadow-2xl">
           <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
             NAFDAC Registration Number
@@ -74,7 +71,6 @@ export default function SearchPage({ onResult }) {
           </button>
         </div>
 
-        {/* Stats */}
         <div className="flex gap-6 mt-10">
           {[
             { value: '1 in 10', label: 'drugs are fake' },
