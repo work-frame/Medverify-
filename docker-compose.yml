@@ -1,0 +1,29 @@
+services:
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: medverify-client
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+    networks:
+      - medverify-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: medverify-server
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    networks:
+      - medverify-network
+
+networks:
+  medverify-network:
+    driver: bridge
