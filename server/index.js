@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
@@ -7,6 +8,22 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+// Connect to MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Atlas connected ✅'))
+  .catch((err) => console.error('MongoDB connection error:', err))
+
+// Report Schema
+const reportSchema = new mongoose.Schema({
+  nafdacNumber: String,
+  drugName: String,
+  location: String,
+  description: String,
+  createdAt: { type: Date, default: Date.now },
+})
+
+const Report = mongoose.model('Report', reportSchema)
 
 // Mock NAFDAC drug database
 const drugDatabase = {
@@ -83,12 +100,18 @@ app.get('/api/verify/:nafdacNumber', (req, res) => {
   res.json(drug)
 })
 
-// Report route
-app.post('/api/report', (req, res) => {
+// Report route — now saves to MongoDB Atlas
+app.post('/api/report', async (req, res) => {
   const { nafdacNumber, drugName, location, description } = req.body
-  console.log('🚩 New fake drug report:', { nafdacNumber, drugName, location, description })
-  // TODO: Save to MongoDB
-  res.json({ message: 'Report received. Thank you.' })
+  try {
+    const report = new Report({ nafdacNumber, drugName, location, description })
+    await report.save()
+    console.log('🚩 Report saved to MongoDB:', report)
+    res.json({ message: 'Report received. Thank you.' })
+  } catch (err) {
+    console.error('Error saving report:', err)
+    res.status(500).json({ message: 'Failed to save report' })
+  }
 })
 
 app.listen(PORT, () => {
