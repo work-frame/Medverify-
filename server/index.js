@@ -216,4 +216,16 @@ app.post('/api/report', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`MedVerify server running on port ${PORT} ✅`)
+
+  // Keep Render from sleeping — ping every 14 minutes
+  setInterval(async () => {
+    try {
+      const https = require('https')
+      https.get('https://medverify-server.onrender.com/', (res) => {
+        console.log(`🏓 Keep-alive ping sent — status: ${res.statusCode}`)
+      })
+    } catch (err) {
+      console.log('Keep-alive ping failed:', err.message)
+    }
+  }, 14 * 60 * 1000) // 14 minutes
 })
