@@ -77,6 +77,106 @@ const drugDatabase = {
     category: "Antihypertensive",
     dosageForm: "Tablet",
   },
+  "F6-5566": {
+    status: "verified",
+    drugName: "Artemether 20mg",
+    manufacturer: "Swipha Nigeria Ltd",
+    nafdacNumber: "F6-5566",
+    expiryDate: "2027-04",
+    batchNumber: "BN20240345",
+    category: "Antimalarial",
+    dosageForm: "Tablet",
+  },
+  "G7-7788": {
+    status: "verified",
+    drugName: "Ciprofloxacin 500mg",
+    manufacturer: "Pharma-Deko Plc",
+    nafdacNumber: "G7-7788",
+    expiryDate: "2026-10",
+    batchNumber: "BN20240567",
+    category: "Antibiotic",
+    dosageForm: "Tablet",
+  },
+  "H8-9900": {
+    status: "verified",
+    drugName: "Omeprazole 20mg",
+    manufacturer: "Chi Pharmaceuticals Ltd",
+    nafdacNumber: "H8-9900",
+    expiryDate: "2027-02",
+    batchNumber: "BN20240678",
+    category: "Antacid",
+    dosageForm: "Capsule",
+  },
+  "I9-1234": {
+    status: "verified",
+    drugName: "Amlodipine 5mg",
+    manufacturer: "Drugfield Pharmaceuticals",
+    nafdacNumber: "I9-1234",
+    expiryDate: "2026-12",
+    batchNumber: "BN20240890",
+    category: "Antihypertensive",
+    dosageForm: "Tablet",
+  },
+  "J1-5678": {
+    status: "verified",
+    drugName: "Azithromycin 500mg",
+    manufacturer: "Hovid Nigeria Ltd",
+    nafdacNumber: "J1-5678",
+    expiryDate: "2027-05",
+    batchNumber: "BN20240912",
+    category: "Antibiotic",
+    dosageForm: "Tablet",
+  },
+  "K2-3456": {
+    status: "verified",
+    drugName: "Vitamin C 1000mg",
+    manufacturer: "Emzor Pharmaceuticals",
+    nafdacNumber: "K2-3456",
+    expiryDate: "2027-08",
+    batchNumber: "BN20241234",
+    category: "Supplement",
+    dosageForm: "Tablet",
+  },
+  "L3-6789": {
+    status: "verified",
+    drugName: "Diclofenac 50mg",
+    manufacturer: "May & Baker Nigeria Plc",
+    nafdacNumber: "L3-6789",
+    expiryDate: "2026-09",
+    batchNumber: "BN20240456",
+    category: "Anti-inflammatory",
+    dosageForm: "Tablet",
+  },
+  "M4-2345": {
+    status: "verified",
+    drugName: "Metronidazole 400mg",
+    manufacturer: "Fidson Healthcare Plc",
+    nafdacNumber: "M4-2345",
+    expiryDate: "2027-07",
+    batchNumber: "BN20241567",
+    category: "Antibiotic",
+    dosageForm: "Tablet",
+  },
+  "N5-8901": {
+    status: "verified",
+    drugName: "Ibuprofen 400mg",
+    manufacturer: "Emzor Pharmaceuticals",
+    nafdacNumber: "N5-8901",
+    expiryDate: "2027-09",
+    batchNumber: "BN20241678",
+    category: "Analgesic",
+    dosageForm: "Tablet",
+  },
+  "O6-4567": {
+    status: "verified",
+    drugName: "Doxycycline 100mg",
+    manufacturer: "Pharma-Deko Plc",
+    nafdacNumber: "O6-4567",
+    expiryDate: "2026-07",
+    batchNumber: "BN20240234",
+    category: "Antibiotic",
+    dosageForm: "Capsule",
+  },
 }
 
 // Health check
@@ -100,7 +200,7 @@ app.get('/api/verify/:nafdacNumber', (req, res) => {
   res.json(drug)
 })
 
-// Report route — now saves to MongoDB Atlas
+// Report route
 app.post('/api/report', async (req, res) => {
   const { nafdacNumber, drugName, location, description } = req.body
   try {
