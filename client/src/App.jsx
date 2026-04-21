@@ -2,6 +2,7 @@ import { useState } from 'react'
 import SearchPage from './pages/SearchPage'
 import ResultPage from './pages/ResultPage'
 import ReportPage from './pages/ReportPage'
+import AboutPage from './pages/AboutPage'
 
 function App() {
   const [page, setPage] = useState('search')
@@ -15,6 +16,7 @@ function App() {
             setResult(data)
             setPage('result')
           }}
+          onAbout={() => setPage('about')}
         />
       )}
       {page === 'result' && (
@@ -26,6 +28,9 @@ function App() {
       )}
       {page === 'report' && (
         <ReportPage onBack={() => setPage('search')} />
+      )}
+      {page === 'about' && (
+        <AboutPage onBack={() => setPage('search')} />
       )}
     </div>
   )

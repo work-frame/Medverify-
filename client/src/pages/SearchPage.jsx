@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import API_URL from '../config'
 
-export default function SearchPage({ onResult }) {
+export default function SearchPage({ onResult, onAbout }) {
   const [nafdacNumber, setNafdacNumber] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -26,11 +26,19 @@ export default function SearchPage({ onResult }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-purple-800 flex flex-col">
-      <header className="px-6 py-5 flex items-center gap-3">
-        <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
-          <span className="text-purple-900 font-black text-sm">MV</span>
+      <header className="px-6 py-5 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
+            <span className="text-purple-900 font-black text-sm">MV</span>
+          </div>
+          <span className="text-white font-bold text-lg tracking-tight">MedVerify</span>
         </div>
-        <span className="text-white font-bold text-lg tracking-tight">MedVerify</span>
+        <button
+          onClick={onAbout}
+          className="text-purple-300 text-sm font-semibold hover:text-white transition-all"
+        >
+          About
+        </button>
       </header>
 
       <div className="flex-1 flex flex-col items-center justify-center px-6 text-center pb-10">
@@ -71,7 +79,14 @@ export default function SearchPage({ onResult }) {
           </button>
         </div>
 
-        <div className="flex gap-6 mt-10">
+        {/* NAFDAC Hotline */}
+        <div className="mt-6 bg-white/10 rounded-2xl px-5 py-3 backdrop-blur">
+          <p className="text-purple-200 text-xs">🚨 NAFDAC Hotline</p>
+          <a href="tel:08001623322" className="text-white font-black text-lg">0800-162-3322</a>
+          <p className="text-purple-300 text-xs">Toll free · 24/7</p>
+        </div>
+
+        <div className="flex gap-6 mt-8">
           {[
             { value: '1 in 10', label: 'drugs are fake' },
             { value: 'Free', label: 'to verify' },
