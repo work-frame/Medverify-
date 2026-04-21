@@ -99,7 +99,7 @@ Make sure you have [Docker Desktop](https://docker.com) installed.
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/medverify.git
+git clone https://github.com/work-frame/Medverify-.git
 cd medverify
 
 # Add your MongoDB connection string
