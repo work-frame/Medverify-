@@ -4,18 +4,13 @@ import API_URL from '../config'
 export default function SearchPage({ onResult, onAbout }) {
   const [nafdacNumber, setNafdacNumber] = useState('')
   const [loading, setLoading] = useState(false)
+  const [waking, setWaking] = useState(false)
   const [error, setError] = useState('')
 
   const validate = (value) => {
-    if (!value.trim()) {
-      return 'Please enter a NAFDAC number'
-    }
-    if (value.trim().length < 4) {
-      return 'NAFDAC number is too short'
-    }
-    if (value.trim().length > 20) {
-      return 'NAFDAC number is too long'
-    }
+    if (!value.trim()) return 'Please enter a NAFDAC number'
+    if (value.trim().length < 4) return 'NAFDAC number is too short'
+    if (value.trim().length > 20) return 'NAFDAC number is too long'
     return null
   }
 
@@ -27,6 +22,10 @@ export default function SearchPage({ onResult, onAbout }) {
     }
     setError('')
     setLoading(true)
+
+    // Show waking message after 4 seconds if still loading
+    const wakingTimer = setTimeout(() => setWaking(true), 4000)
+
     try {
       const res = await fetch(`${API_URL}/api/verify/${nafdacNumber.trim()}`)
       if (!res.ok) throw new Error('Server error')
@@ -35,7 +34,9 @@ export default function SearchPage({ onResult, onAbout }) {
     } catch (err) {
       setError('Could not connect to server. Please try again.')
     } finally {
+      clearTimeout(wakingTimer)
       setLoading(false)
+      setWaking(false)
     }
   }
 
@@ -55,6 +56,30 @@ export default function SearchPage({ onResult, onAbout }) {
           About
         </button>
       </header>
+
+      {/* Full screen loading overlay when waking Render */}
+      {waking && (
+        <div className="fixed inset-0 bg-purple-950/90 backdrop-blur flex flex-col items-center justify-center z-50">
+          <svg className="animate-spin h-12 w-12 text-purple-300 mb-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+          </svg>
+          <h2 className="text-white font-black text-lg mb-2">Connecting to server...</h2>
+          <p className="text-purple-300 text-sm text-center max-w-xs">
+            Our server is waking up. This only happens once and takes about 30 seconds. Please wait.
+          </p>
+          {/* Progress dots */}
+          <div className="flex gap-2 mt-6">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="flex-1 flex flex-col items-center justify-center px-6 text-center pb-10">
         <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-6 backdrop-blur">
@@ -88,7 +113,6 @@ export default function SearchPage({ onResult, onAbout }) {
               error ? 'border-red-400 bg-red-50' : 'border-gray-200'
             }`}
           />
-          {/* Character counter */}
           <p className="text-right text-xs text-gray-400 mb-2">
             {nafdacNumber.length}/20
           </p>
