@@ -11,7 +11,7 @@ Built for the **NACOS Buildathon 1.0 — McPherson University Innovation Challen
 
 ## 🌍 Live Demo
 
-🔗 [medverify.vercel.app](https://medverify-psi.vercel.app/)
+🔗 [medverify.vercel.app](https://medverify-psi.vercel.app)
 
 ---
 
@@ -92,7 +92,7 @@ MedVerify gives every Nigerian a free, instant drug verification tool in their p
 ## 🚀 Getting Started
 
 ### Option 1 — Use the Live App
-Visit [medverify.vercel.app](https://medverify.vercel.app) — no setup needed.
+Visit [medverify.vercel.app](https://medverify-psi.vercel.app) — no setup needed.
 
 ### Option 2 — Run Locally with Docker
 Make sure you have [Docker Desktop](https://docker.com) installed.
