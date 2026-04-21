@@ -11,7 +11,7 @@ Built for the **NACOS Buildathon 1.0 — McPherson University Innovation Challen
 
 ## 🌍 Live Demo
 
-🔗 [medverify.vercel.app](https://medverify.vercel.app)
+🔗 [medverify.vercel.app](https://medverify-psi.vercel.app/)
 
 ---
 
