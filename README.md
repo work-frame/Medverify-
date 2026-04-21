@@ -1,4 +1,4 @@
-**MedVerify** 💊
+## MedVerify 💊
 
 > Verify your drugs. Protect your life.
 
