@@ -6,15 +6,30 @@ export default function SearchPage({ onResult, onAbout }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  const validate = (value) => {
+    if (!value.trim()) {
+      return 'Please enter a NAFDAC number'
+    }
+    if (value.trim().length < 4) {
+      return 'NAFDAC number is too short'
+    }
+    if (value.trim().length > 20) {
+      return 'NAFDAC number is too long'
+    }
+    return null
+  }
+
   const handleSearch = async () => {
-    if (!nafdacNumber.trim()) {
-      setError('Please enter a NAFDAC number')
+    const validationError = validate(nafdacNumber)
+    if (validationError) {
+      setError(validationError)
       return
     }
     setError('')
     setLoading(true)
     try {
       const res = await fetch(`${API_URL}/api/verify/${nafdacNumber.trim()}`)
+      if (!res.ok) throw new Error('Server error')
       const data = await res.json()
       onResult(data)
     } catch (err) {
@@ -62,20 +77,40 @@ export default function SearchPage({ onResult, onAbout }) {
           <input
             type="text"
             value={nafdacNumber}
-            onChange={(e) => setNafdacNumber(e.target.value)}
+            onChange={(e) => {
+              setNafdacNumber(e.target.value)
+              if (error) setError('')
+            }}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="e.g. A4-0123"
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 mb-3"
+            maxLength={20}
+            className={`w-full border rounded-xl px-4 py-3 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 mb-1 transition-all ${
+              error ? 'border-red-400 bg-red-50' : 'border-gray-200'
+            }`}
           />
+          {/* Character counter */}
+          <p className="text-right text-xs text-gray-400 mb-2">
+            {nafdacNumber.length}/20
+          </p>
           {error && (
-            <p className="text-red-500 text-xs mb-3">{error}</p>
+            <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 mb-3">
+              <p className="text-red-500 text-xs">⚠️ {error}</p>
+            </div>
           )}
           <button
             onClick={handleSearch}
             disabled={loading}
             className="w-full bg-purple-800 hover:bg-purple-700 text-white font-bold py-3 rounded-xl text-sm transition-all disabled:opacity-60"
           >
-            {loading ? 'Verifying...' : 'Verify Drug ✓'}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                </svg>
+                Verifying...
+              </span>
+            ) : 'Verify Drug ✓'}
           </button>
         </div>
 
