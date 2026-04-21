@@ -1,5 +1,4 @@
-cat > /home/daniel/Documents/Medverify/README.md << 'EOF'
-# MedVerify 💊
+ MedVerify 💊
 
 > Verify your drugs. Protect your life.
 
